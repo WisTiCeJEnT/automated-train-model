@@ -20,7 +20,7 @@ usbMsgLen_t usbFunctionSetup(uint8_t data[8])
 
     /* declared as static so they stay valid when usbFunctionSetup returns */
     static uint8_t state;  
-    static uint16_t ls;  
+    static uint16_t ls[4];  
 
     if (rq->bRequest == RQ_SET_LED)
     {
@@ -30,30 +30,15 @@ usbMsgLen_t usbFunctionSetup(uint8_t data[8])
         return 0;
     }
 
-    else if (rq->bRequest == RQ_SET_LED_VALUE)
-    {
-        uint8_t led_state = rq->wValue.bytes[0];
-        set_led_value(led_state);
-        return 0;
-    }
-
-    else if (rq->bRequest == RQ_GET_SWITCH)
-    {
-        state = SWITCH_PRESSED();
-
-        /* point usbMsgPtr to the data to be returned to host */
-        usbMsgPtr = &state;
-
-        /* return the number of bytes of data to be returned to host */
-        return 1;
-    }
-
     else if (rq->bRequest == RQ_GET_LIGHT)
     {
-        ls = read_adc(PC4);
+        ls[0] = read_adc(PC0);
+        ls[1] = read_adc(PC1);
+        ls[2] = read_adc(PC2);
+        ls[3] = read_adc(PC3);
         usbMsgPtr = &ls;
 
-        return 2;
+        return 8;
     }
 
 

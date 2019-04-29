@@ -96,8 +96,8 @@ class PeriBoard:
         '''
         Return the current reading of light sensor on peripheral board
         '''
-        state = self.mcu.usb_read(request=RQ_GET_LIGHT, length=2)
+        state = self.mcu.usb_read(request=RQ_GET_LIGHT, length=8)
+        print(state)
 
-
-
-        return state[1]*256+state[0]
+        print(state[1]*256+state[0], state[3]*256+state[2], state[5]*256+state[4], state[7]*256+state[6], )
+        return (state[1]*256+state[0], state[3]*256+state[2], state[5]*256+state[4], state[7]*256+state[6], )
