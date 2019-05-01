@@ -1,103 +1,46 @@
-import usb
+from practicum import find_mcu_boards, McuBoard, PeriBoard
+from time import sleep
+import requests
+import json
 
-RQ_SET_LED = 0
-RQ_SET_LED_VALUE = 1
-RQ_GET_SWITCH = 2
-RQ_GET_LIGHT = 3
+URL = "http://127.0.0.1:5000/station"
 
-####################################
-def find_mcu_boards():
-    '''
-    Find all Practicum MCU boards attached to the machine, then return a list
-    of USB device handles for all the boards
+def is_here(ldr_status):
+    if (ldr_status > 400):
+        return '0'
+    return '1'
 
-    >>> devices = find_mcu_boards()
-    >>> first_board = McuBoard(devices[0])
-    '''
-    boards = [dev for bus in usb.busses()
-                  for dev in bus.devices
-                  if (dev.idVendor,dev.idProduct) == (0x16c0,0x05dc)]
-    return boards
+def position(ldr_light):
+    return is_here(ldr_light[0])+is_here(ldr_light[1])+is_here(ldr_light[2])+is_here(ldr_light[3])
 
-####################################
-class McuBoard:
-    '''
-    Generic class for accessing Practicum MCU board via USB connection.
-    '''
+def poster(payload):
+    try:
+        headers = {'content-type': 'application/json'}
+        response = requests.post(URL, data=json.dumps(payload), headers=headers)
+        print(response.json)
+    except:
+        print("fail to connect to server")
 
-    ################################
-    def __init__(self, dev):
-        self.device = dev
-        self.handle = dev.open()
+devs = find_mcu_boards()
 
-    ################################
-    def usb_write(self, request, data=[], index=0, value=0):
-        '''
-        Send data output to the USB device (i.e., MCU board)
-           request: request number to appear as bRequest field on the USB device
-           index: 16-bit value to appear as wIndex field on the USB device
-           value: 16-bit value to appear as wValue field on the USB device
-        '''
-        reqType = usb.TYPE_VENDOR | usb.RECIP_DEVICE | usb.ENDPOINT_OUT
-        self.handle.controlMsg(
-                reqType, request, data, value=value, index=index)
+if len(devs) == 0:
+    print("*** No practicum board found.")
+    exit(1)
 
-    ################################
-    def usb_read(self, request, length=1, index=0, value=0):
-        '''
-        Request data input from the USB device (i.e., MCU board)
-           request: request number to appear as bRequest field on the USB device
-           length: number of bytes to read from the USB device
-           index: 16-bit value to appear as wIndex field on the USB device
-           value: 16-bit value to appear as wValue field on the USB device
+mcu = McuBoard(devs[0])
+print("*** Practicum board found")
+print("*** Manufacturer: %s" % \
+        mcu.handle.getString(mcu.device.iManufacturer, 256))
+print("*** Product: %s" % \
+        mcu.handle.getString(mcu.device.iProduct, 256))
+peri = PeriBoard(mcu)
 
-        If successful, the method returns a tuple of length specified
-        containing data returned from the MCU board.
-        '''
-        reqType = usb.TYPE_VENDOR | usb.RECIP_DEVICE | usb.ENDPOINT_IN
-        buf = self.handle.controlMsg(
-                reqType, request, length, value=value, index=index)
-        return buf
+count = 0
+while True:
+    #peri.set_led_value(count)
+    light = peri.get_light()
 
+    print(light)
+    poster({"train_position": position(light)})
 
-####################################
-class PeriBoard:
-
-    ################################
-    def __init__(self, mcu):
-        self.mcu = mcu
-
-    ################################
-    def set_led(self, led_no, led_state):
-        '''
-        Set status of LED led_no on peripheral board to led_state
-        (0 => off, 1 => on)
-        '''
-        self.mcu.usb_write(request=RQ_SET_LED, index=led_no, value=led_state)
-
-    ################################
-    def set_led_value(self, value):
-        '''
-        Display right 3 bits of value on peripheral board's LEDs
-        '''
-        self.mcu.usb_write(request=RQ_SET_LED_VALUE, value=value)
-
-    ################################
-    def get_switch(self):
-        '''
-        Return a boolean value indicating whether the switch on the peripheral
-        board is currently pressed
-        '''
-        state = self.mcu.usb_read(request=RQ_GET_SWITCH, length=1)
-        return state[0] == 1
-
-    ################################
-    def get_light(self):
-        '''
-        Return the current reading of light sensor on peripheral board
-        '''
-        state = self.mcu.usb_read(request=RQ_GET_LIGHT, length=8)
-        print(state)
-
-        print(state[1]*256+state[0], state[3]*256+state[2], state[5]*256+state[4], state[7]*256+state[6], )
-        return (state[1]*256+state[0], state[3]*256+state[2], state[5]*256+state[4], state[7]*256+state[6], )
+    sleep(0.75)
