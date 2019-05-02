@@ -6,10 +6,8 @@
 #include "peri.h"
 #include "usbdrv.h"
 
-#define RQ_SET_LED         0
-#define RQ_SET_LED_VALUE   1
-#define RQ_GET_SWITCH      2
-#define RQ_GET_LIGHT       3
+#define RQ_SET_SIGNAL_LIGHT   0
+#define RQ_GET_LIGHT       1
 
 /* ------------------------------------------------------------------------- */
 /* ----------------------------- USB interface ----------------------------- */
@@ -22,11 +20,10 @@ usbMsgLen_t usbFunctionSetup(uint8_t data[8])
     static uint8_t state;  
     static uint16_t ls[4];  
 
-    if (rq->bRequest == RQ_SET_LED)
+    if (rq->bRequest == RQ_SET_SIGNAL_LIGHT)
     {
         uint8_t led_state = rq->wValue.bytes[0];
-        uint8_t led_no  = rq->wIndex.bytes[0];
-        set_led(led_no, led_state);
+        set_led_value(led_state);
         return 0;
     }
 

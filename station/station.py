@@ -18,6 +18,7 @@ def poster(payload):
         headers = {'content-type': 'application/json'}
         response = requests.post(URL, data=json.dumps(payload), headers=headers)
         print(response.json())
+        return(response.json())
         
     except:
         print("fail to connect to server")
@@ -42,6 +43,13 @@ while True:
     light = peri.get_light()
 
     print(light)
-    poster({"train_position": position(light)})
-
+    res = poster({"train_position": position(light)})
+    payload = 0
+    if res["traffic_signal"][0]:
+        payload += 4
+    if res["traffic_signal"][1]:
+        payload += 2
+    if res["traffic_signal"][2]:
+        payload += 1
+    peri.set_signal_light(value = int(payload))
     sleep(0.75)

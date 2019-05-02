@@ -1,9 +1,7 @@
 import usb
 
-RQ_SET_LED = 0
-RQ_SET_LED_VALUE = 1
-RQ_GET_SWITCH = 2
-RQ_GET_LIGHT = 3
+RQ_SET_SIGNAL_LIGHT = 0
+RQ_GET_LIGHT = 1
 
 ####################################
 def find_mcu_boards():
@@ -68,19 +66,11 @@ class PeriBoard:
         self.mcu = mcu
 
     ################################
-    def set_led(self, led_no, led_state):
-        '''
-        Set status of LED led_no on peripheral board to led_state
-        (0 => off, 1 => on)
-        '''
-        self.mcu.usb_write(request=RQ_SET_LED, index=led_no, value=led_state)
-
-    ################################
-    def set_led_value(self, value):
+    def set_signal_light(self, value):
         '''
         Display right 3 bits of value on peripheral board's LEDs
         '''
-        self.mcu.usb_write(request=RQ_SET_LED_VALUE, value=value)
+        self.mcu.usb_write(request=RQ_SET_SIGNAL_LIGHT, value=value)
 
     ################################
     def get_light(self):

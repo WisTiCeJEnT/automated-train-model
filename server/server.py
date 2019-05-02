@@ -17,7 +17,7 @@ def light_signal():
     if(check_train_position() == dest):
         print("all red")
         signal = [False, False, False] 
-    elif(check_train_position() < dest):#forward
+    elif(check_train_position() < dest and check_train_position() != 0):#forward
         signal = [False, False, False] 
         for i in range(check_train_position(),dest):
             signal[i-1] = True
@@ -66,7 +66,7 @@ def station():
     print("train_position(from station):",train_position)
     return jsonify({
         "status": "got train position", 
-        #"traffic_signal": light_signal(),
+        "traffic_signal": light_signal(),
         #"train_position": check_train_position(),
         #"destination": dest
         })
