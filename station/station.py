@@ -17,7 +17,8 @@ def poster(payload):
     try:
         headers = {'content-type': 'application/json'}
         response = requests.post(URL, data=json.dumps(payload), headers=headers)
-        print(response.json)
+        print(response.json())
+        
     except:
         print("fail to connect to server")
 
