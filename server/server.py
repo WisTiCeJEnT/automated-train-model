@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 horn_status = '0'
 dest = 1
@@ -46,6 +48,7 @@ def horn():
 @app.route('/movetrain', methods = ['GET', 'POST'])
 def move_train():
     data = request.get_json()
+    print(data["destination"])
     if(int(data["destination"]) != check_train_position):
         global dest
         dest = int(data["destination"])
@@ -76,7 +79,8 @@ def train():
     global move
     print("train position", check_train_position())
     if(check_train_position() == dest):
-        command = "0"+horn_status+"00"
+        command = "0"+horn_status+str(check_train_position())+"0"
+        print("command to train", command)
         print("train is standby")
         return command
     elif(check_train_position() == 0):
