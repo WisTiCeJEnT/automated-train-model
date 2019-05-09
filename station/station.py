@@ -52,4 +52,4 @@ while True:
     if res["traffic_signal"][2]:
         payload += 4
     peri.set_signal_light(value = int(payload))
-    sleep(0.75)
+    sleep(0.25)
