@@ -4,6 +4,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
+my_map = [0,2,4,6]
 horn_status = '0'
 dest = 1
 source = 0
@@ -67,7 +68,7 @@ def trainController():
     global last_move
     c_pos = 0
     if(check_train_position()!=0):
-        last_move = check_train_position()
+        last_move = my_map[check_train_position()-1]
         c_pos = last_move
     else:
         if(move == 1):
@@ -77,7 +78,7 @@ def trainController():
     return jsonify({
         "traffic_signal": light_signal(),
         "current_position": c_pos,
-        "jui_nine": c_pos%2
+        "jui_nine": (dest==check_train_position())
     })
 
 @app.route('/station', methods = ['GET', 'POST'])

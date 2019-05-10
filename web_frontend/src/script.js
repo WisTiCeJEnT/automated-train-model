@@ -12,7 +12,7 @@ setInterval(function() {
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var myArr = JSON.parse(this.responseText);
-            console.log(myArr);
+            //console.log(myArr);
             console.log(myArr.traffic_signal[0]);
 
             if (myArr.traffic_signal[0])
@@ -34,7 +34,16 @@ setInterval(function() {
             document.getElementById("pos4").style = "visibility: hidden"
             document.getElementById("pos5").style = "visibility: hidden"
             document.getElementById("pos6").style = "visibility: hidden"
-            
+            console.log(myArr.jui_nine)
+            document.getElementById("pos"+myArr.current_position).style = "visibility: visible"
+            if (myArr.jui_nine)
+            {
+                document.getElementById("jui").src="./img/jui_yeah.png";
+            }
+            else
+            {
+                document.getElementById("jui").src="./img/jui_sad.png";
+            }
         }
     };
     xmlhttp.open("GET", url, true);
