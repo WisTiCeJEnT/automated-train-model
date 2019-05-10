@@ -61,6 +61,14 @@ def move_train():
         "destination": dest
         })
 
+@app.route('/controller', methods = ['GET'])
+def trainController():
+    return jsonify(
+    {
+        "traffic_signal": light_signal()
+    }
+    )
+
 @app.route('/station', methods = ['GET', 'POST'])
 def station():
     data = request.get_json()
