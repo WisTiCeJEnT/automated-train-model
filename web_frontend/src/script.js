@@ -27,30 +27,20 @@ setInterval(function() {
                 document.getElementById("sig2").src="./img/green-light.png";
             else
                 document.getElementById("sig2").src="./img/red-light.png";
+            document.getElementById("pos0").style = "visibility: hidden"
+            document.getElementById("pos1").style = "visibility: hidden"
+            document.getElementById("pos2").style = "visibility: hidden"
+            document.getElementById("pos3").style = "visibility: hidden"
+            document.getElementById("pos4").style = "visibility: hidden"
+            document.getElementById("pos5").style = "visibility: hidden"
+            document.getElementById("pos6").style = "visibility: hidden"
+            
         }
     };
     xmlhttp.open("GET", url, true);
     xmlhttp.send();
 }, 1000);
-/*
-$(document).on('pageshow', function () {
-    var url = URL + "controller",
-        callback = function (data) {
-            var content = [];
-            $.each(data, function (i, val) {
-                content.push(val.list);
-            });
-            $('#games').html(content.join('')).listview('refresh');
-            $.mobile.loading('hide');
-        },
-        fetchData = function () {
-            $.mobile.loading('show');
-            $.getJSON(url, callback);
-        };
-    fetchData();
-    setInterval(fetchData, 5000);
-});
-*/
+
 btn0.addEventListener('click', function () {
     console.log("Go to 1")
     var xhr = new XMLHttpRequest();

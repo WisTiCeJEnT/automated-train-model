@@ -9,6 +9,7 @@ dest = 1
 source = 0
 train_position = "0000"
 move = 0
+last_move = 1
 signal = [False, False, False]
 
 def check_train_position():
@@ -63,11 +64,21 @@ def move_train():
 
 @app.route('/controller', methods = ['GET'])
 def trainController():
-    return jsonify(
-    {
-        "traffic_signal": light_signal()
-    }
-    )
+    global last_move
+    c_pos = 0
+    if(check_train_position()!=0):
+        last_move = check_train_position()
+        c_pos = last_move
+    else:
+        if(move == 1):
+            c_pos = last_move+1
+        else:
+            c_pos = last_move-1
+    return jsonify({
+        "traffic_signal": light_signal(),
+        "current_position": c_pos,
+        "jui_nine": c_pos%2
+    })
 
 @app.route('/station', methods = ['GET', 'POST'])
 def station():

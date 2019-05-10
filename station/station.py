@@ -3,10 +3,11 @@ from time import sleep
 import requests
 import json
 
+LTH = 800
 URL = "http://127.0.0.1:5000/station"
 
 def is_here(ldr_status):
-    if (ldr_status > 400):
+    if (ldr_status > LTH):
         return '0'
     return '1'
 
