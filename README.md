@@ -14,53 +14,36 @@
 2|นาย ธันยา ตันศรีประภาศิริ | 6010500389 | lastthanya |
 
 ### ไฟล์ที่เกี่ยวข้อง
-├── LICENSE.txt
-
-├── README.md
-
-├── esp8266
-
-│   └── esp8266.ino
-
-├── practicum
-
-│   ├── Makefile
-
-│   ├── main.c
-
-│   ├── peri.c
-
-│   ├── peri.h
-
-│   ├── usbconfig.h
-
-│   └── usbdrv/
-
-├── server
-
-│   └── server.py
-
-├── station
-
-│   ├── practicum.py
-
-│   └── station.py
-
-└── web\_frontend
-
-    ├── img
-    │   ├── green-light.png
-    │   ├── red-light.png
-    │   ├── sad.png
-    │   ├── station.png
-    │   ├── station1.png
-    │   ├── station2.png
-    │   ├── station3.png
-    │   ├── station4.png
-    │   ├── traffic-light.png
-    │   ├── train.png
-    │   └── yeah.png
-    ├── index.html
-    └── src
-        ├── script.js
-        └── style.css
+    ├── LICENSE.txt
+    ├── README.md
+    ├── esp8266
+    │   └── esp8266.ino
+    ├── practicum
+    │   ├── Makefile
+    │   ├── main.c
+    │   ├── peri.c
+    │   ├── peri.h
+    │   ├── usbconfig.h
+    │   └── usbdrv/
+    ├── server
+    │   └── server.py
+    ├── station
+    │   ├── practicum.py
+    │   └── station.py
+    └── web\_frontend
+        ├── img
+        │   ├── green-light.png
+        │   ├── red-light.png
+        │   ├── sad.png
+        │   ├── station.png
+        │   ├── station1.png
+        │   ├── station2.png
+        │   ├── station3.png
+        │   ├── station4.png
+        │   ├── traffic-light.png
+        │   ├── train.png
+        │   └── yeah.png
+        ├── index.html
+        └── src
+            ├── script.js
+            └── style.css
