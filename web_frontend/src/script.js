@@ -38,11 +38,11 @@ setInterval(function() {
             document.getElementById("pos"+myArr.current_position).style = "visibility: visible"
             if (myArr.jui_nine)
             {
-                document.getElementById("jui").src="./img/jui_yeah.png";
+                document.getElementById("jui").src="./img/yeah.png";
             }
             else
             {
-                document.getElementById("jui").src="./img/jui_sad.png";
+                document.getElementById("jui").src="./img/sad.png";
             }
         }
     };
