@@ -14,24 +14,24 @@
 2|นาย ธันยา ตันศรีประภาศิริ | 6010500389 | lastthanya |
 
 ### ไฟล์ที่เกี่ยวข้อง
-    ├── LICENSE.txt
-    ├── README.md
+    ├── LICENSE.txt             << เงื่อนไขด้านลิขสิทธิ
+    ├── README.md               << รายละเอียดงาน 
     ├── esp8266
-    │   └── esp8266.ino
+    │   └── esp8266.ino         << ไฟล์สำหรับตัวรถไฟ
     ├── practicum
-    │   ├── Makefile
-    │   ├── main.c
-    │   ├── peri.c
-    │   ├── peri.h
-    │   ├── usbconfig.h
-    │   └── usbdrv/
+    │   ├── Makefile            << สำหรับการ Complie & Deploy
+    │   ├── main.c              << ไฟล์สำหรับตัวสถานี (ฝั่งบอร์ด Practicum)
+    │   ├── peri.c              << ไฟล์ช่วยเหลือเกี่ยวกับอุปกรณ์ต่อพวง
+    │   ├── peri.h              << เชื่อมต่อไฟล์ช่วยเหลือและไฟล์หลัก
+    │   ├── usbconfig.h         << ไฟล์ตั้งค่าการใช้งาน USB
+    │   └── usbdrv/             << ไฟล์สนับสนุนการเชื่อมต่อผ่าน port USB
     ├── server
-    │   └── server.py
+    │   └── server.py           << สำหรับสร้าง Backend APIs กลางระหว่างแต่ละอุปกรณ์
     ├── station
-    │   ├── practicum.py
-    │   └── station.py
-    └── web\_frontend
-        ├── img
+    │   ├── practicum.py        << สำหรับรับค่าจากบอร์ด Practicum
+    │   └── station.py          << สำหรับคำนวณค่าจากบอร์ดเบื้องต้นและส่งต่อให้ Server
+    └── web_frontend
+        ├── img                 << รูปภาพสำหรับหน้าเว็บ* 
         │   ├── green-light.png
         │   ├── red-light.png
         │   ├── sad.png
@@ -43,7 +43,8 @@
         │   ├── traffic-light.png
         │   ├── train.png
         │   └── yeah.png
-        ├── index.html
-        └── src
+        ├── index.html         << หน้าเว็บควบคุม
+        └── src                << ส่วนช่วยคำนวณของหน้าเว็บ
             ├── script.js
             └── style.css
+    * ลิขสิทธิทั้งหมด สำหรับการใช้งานไม่แสวงผลกำไรเท่านั้น โดย LISCENSE.txt ไม่ควบคุมไฟล์ ณ ที่นี้
