@@ -49,33 +49,18 @@
 └── web\_frontend
 
     ├── img
-
     │   ├── green-light.png
-
     │   ├── red-light.png
-
     │   ├── sad.png
-
     │   ├── station.png
-
     │   ├── station1.png
-
     │   ├── station2.png
-
     │   ├── station3.png
-
     │   ├── station4.png
-
     │   ├── traffic-light.png
-
     │   ├── train.png
-
     │   └── yeah.png
-
     ├── index.html
-
     └── src
-
         ├── script.js
-
         └── style.css
